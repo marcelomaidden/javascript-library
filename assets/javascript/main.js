@@ -14,11 +14,23 @@ function addBookToLibrary(book) {
 }
 
 function listBooks() {
-  var content = document.querySelector('div');
-  alert(content);
+
+  
+
+  var content = document.querySelector('.content');
   myLibrary.forEach (function(item) {
     var card = document.createElement('div');
-    card.innerText = item;
+    card.setAttribute('class', 'card');
+    var card_body = document.createElement('div');
+    card_body.setAttribute('class', 'card-body');
+    card_body.innerText = item.title;
+    var p = document.createElement('p');
+    p.setAttribute('class', 'card-text');
+    p.innerText = item.author;
+    
+    card.appendChild(card_body);
+    card.appendChild(p);
+
     content.appendChild(card);
   })
 }
