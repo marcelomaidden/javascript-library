@@ -27,23 +27,26 @@ function listBooks() {
     var p = document.createElement('p');
     p.setAttribute('class', 'card-text');
     p.innerText = item.author;
-    
+    var description = document.createElement('p');
+    description.setAttribute('class', 'card-text');
+    description.innerText = item.description;
     card.appendChild(card_body);
     card.appendChild(p);
-
+    card.appendChild(description);
     content.appendChild(card);
   })
 }
 
-let book= new Book("100 rules of love", "ABC", "A great book", true)
+
+let book= new Book("100 rules of love", "ABC", 44,"A great book", true)
 
 addBookToLibrary(book);
 
-let book1= new Book("200 rules of love", "DBD", "A great book", true)
+let book1= new Book("200 rules of love", "DBD", 44,"A great book", true)
 
 addBookToLibrary(book1);
 
-let book2= new Book("300 rules of love", "Umair", "A great book", true)
+let book2= new Book("300 rules of love", "Umair", 44,"A great book", true)
 
 addBookToLibrary(book2);
 
