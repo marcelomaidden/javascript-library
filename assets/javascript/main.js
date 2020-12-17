@@ -1,4 +1,4 @@
-const myLibrary = [];
+let myLibrary = [];
 let last = 0;
 
 function Book(title, author, pages, description, read) {
@@ -83,7 +83,7 @@ function listBooks() {
   content.innerHTML = '';
 
   for (let i = 0; i < myLibrary.length; i += 1) {
-    createCard(myLibrary[i]);
+      createCard(myLibrary[i]);
   }
 }
 
@@ -104,21 +104,26 @@ function clearInputs() {
 
 function saveNewBook(event) {
   event.preventDefault();
-  const title = document.getElementById('bookName').value;
-  const author = document.getElementById('authorName').value;
-  const pages = document.getElementById('bookPages').value;
-  const description = document.getElementById('bookDescription').value;
-  const read = document.getElementById('read').checked;
+  const form = document.querySelector('form');
+  if (!form.checkValidity() === false) {
+    const title = document.getElementById('bookName').value;
+    const author = document.getElementById('authorName').value;
+    const pages = document.getElementById('bookPages').value;
+    const description = document.getElementById('bookDescription').value;
+    const read = document.getElementById('read').checked;
 
-  const book = new Book(title, author, pages, description, read);
-  addBookToLibrary(book);
+    const book = new Book(title, author, pages, description, read);
+    addBookToLibrary(book);
 
-  const modalBackdrop = document.querySelector('.modal-backdrop.show ');
-  modalBackdrop.style.display = 'none';
-  const modal = document.querySelector('.modal');
-  modal.style.display = 'none';
+    const modalBackdrop = document.querySelector('.modal-backdrop.show ');
+    modalBackdrop.style.display = 'none';
+    const modal = document.querySelector('.modal');
+    modal.style.display = 'none';
 
-  clearInputs();
+    clearInputs();
+  } 
+
+  form.classList.add('was-validated');
 }
 
 const saveBook = document.querySelector('.saveBook');
