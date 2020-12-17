@@ -13,7 +13,7 @@ function Book(title, author, pages, description, read) {
 function deleteBook(event) {
   const id = event.target.getAttribute('delete-id');
   const data = `div[data-id="${id}"]`;
-  delete myLibrary[id];
+  myLibrary.splice(myLibrary.pop(), id);
   const book = document.querySelector(data);
   book.remove();
 }
