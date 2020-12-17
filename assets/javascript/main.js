@@ -1,4 +1,4 @@
-let myLibrary = [];
+const myLibrary = [];
 let last = 0;
 
 function Book(title, author, pages, description, read) {
@@ -83,7 +83,7 @@ function listBooks() {
   content.innerHTML = '';
 
   for (let i = 0; i < myLibrary.length; i += 1) {
-      createCard(myLibrary[i]);
+    createCard(myLibrary[i]);
   }
 }
 
@@ -121,7 +121,7 @@ function saveNewBook(event) {
     modal.style.display = 'none';
 
     clearInputs();
-  } 
+  }
 
   form.classList.add('was-validated');
 }
