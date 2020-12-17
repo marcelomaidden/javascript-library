@@ -79,11 +79,6 @@ function createCard(book) {
     description.setAttribute("class", "card-text");
     description.innerText = book.description;
 
-   
-    var read = document.createElement("p");
-    read.setAttribute("class", "card-text");
-    read.innerText = book.read;
-
     let readButton = document.createElement('button');
     readButton.setAttribute('class', 'btn btn-primary');
     readButton.setAttribute('read-id', book.id);
@@ -107,7 +102,6 @@ function createCard(book) {
     card.appendChild(card_body);
     card.appendChild(p);
     card.appendChild(description);
-    card.appendChild(read);
     card.appendChild(readButton);
     content.appendChild(card);
 
