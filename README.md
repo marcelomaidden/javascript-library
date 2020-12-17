@@ -7,7 +7,7 @@
 [![GitHub2 Pull Requests](https://img.shields.io/badge/GitHub-Pull%20Requests-blue)](https://github.com/marcelomaidden/javascript-library/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 </div>
-<p align="center">Library in JavaScript is a practice project, which includes the user input functionality and managing the dynamically DOM manipulation.We used Javascript, HTML5, CSS3, Bootsrap to implement it</p>
+<p align="center">Library in JavaScript is a practice project, which includes the user input functionality and managing the dynamically DOM manipulation.We used Javascript, HTML5, CSS3, Bootstrap to implement it</p>
 
 
 
