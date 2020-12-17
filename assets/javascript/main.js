@@ -1,7 +1,9 @@
 let myLibrary = [];
 let count = 0;
+let last = 0;
 
 function Book(title, author, pages, description, read) {
+    this.id = last;
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -12,7 +14,7 @@ function Book(title, author, pages, description, read) {
 function addBookToLibrary(book) {
     myLibrary.push(book);
     listBooks();
-    count++;
+    last++;
 }
 
 function clearInputs()
@@ -45,13 +47,13 @@ function saveNewBook(event) {
 function deleteBook(event) {
     id = event.target.getAttribute('delete-id');
     data='div[data-id="'+id+'"]';
+    delete myLibrary[id];
     let book = document.querySelector(data);
     book.remove();
 }
 
 function readStatus(event){
   id = event.target.getAttribute('read-id');
-  console.log(myLibrary[id].read)
   if(myLibrary[id].read == true){
     myLibrary[id].read=false
   }
@@ -61,7 +63,7 @@ function readStatus(event){
   listBooks()
 }
 
-function listBooks() {
+function createCard(book) {
     var content = document.querySelector(".content");
     var card = document.createElement("div");
     card.setAttribute("class", "card");
@@ -69,24 +71,24 @@ function listBooks() {
     card_body.setAttribute("class", "card-body");
     var card_title = document.createElement('h5');
     card_title.setAttribute('class', 'card-title');
-    card_title.innerText = myLibrary[count].title;
+    card_title.innerText = book.title;
     var p = document.createElement("p");
     p.setAttribute("class", "card-text");
-    p.innerText = myLibrary[count].author;
+    p.innerText = book.author;
     var description = document.createElement("p");
     description.setAttribute("class", "card-text");
-    description.innerText = myLibrary[count].description;
+    description.innerText = book.description;
 
    
     var read = document.createElement("p");
     read.setAttribute("class", "card-text");
-    read.innerText = myLibrary[count].read;
+    read.innerText = book.read;
 
     let readButton = document.createElement('button');
     readButton.setAttribute('class', 'btn btn-primary');
-    readButton.setAttribute('read-id', count);
+    readButton.setAttribute('read-id', book.id);
     readButton.addEventListener('click', readStatus,false);
-    if (myLibrary[count].read == true){
+    if (book.read == true){
       
       readButton.innerText = 'Unread';
     } else{
@@ -96,11 +98,11 @@ function listBooks() {
 
     let deleteButton = document.createElement('button');
     deleteButton.setAttribute('class', 'btn btn-danger');
-    deleteButton.setAttribute('delete-id', count);
+    deleteButton.setAttribute('delete-id', book.id);
     deleteButton.addEventListener('click', deleteBook,false);
     deleteButton.innerText = 'Delete';
 
-    card.setAttribute('data-id', count);
+    card.setAttribute('data-id', book.id);
     card_body.appendChild(card_title);
     card.appendChild(card_body);
     card.appendChild(p);
@@ -110,4 +112,14 @@ function listBooks() {
     content.appendChild(card);
 
     card.appendChild(deleteButton);
+}
+
+function listBooks() {  
+    content = document.querySelector('.content');
+
+    content.innerHTML = '';
+
+    for (let i in myLibrary) {
+        createCard(myLibrary[i])
+    }
 }
