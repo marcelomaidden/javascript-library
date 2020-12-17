@@ -11,7 +11,7 @@ function Book(title, author, pages, description, read) {
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
-    listBooks(myLibrary, count);
+    listBooks();
     count++;
 }
 
@@ -29,7 +29,7 @@ function saveNewBook(event) {
     let author = document.getElementById("authorName").value;
     let pages = document.getElementById("bookPages").value;
     let description = document.getElementById("bookDescription").value;
-    let read = document.getElementById("read").value;
+    let read = document.getElementById("read").checked;
 
     book = new Book(title, author, pages, description, read);
     addBookToLibrary(book);
@@ -49,7 +49,19 @@ function deleteBook(event) {
     book.remove();
 }
 
-function listBooks(myLibrary, count) {
+function readStatus(event){
+  id = event.target.getAttribute('read-id');
+  console.log(myLibrary[id].read)
+  if(myLibrary[id].read == true){
+    myLibrary[id].read=false
+  }
+  else{
+    myLibrary[id].read=true
+  }
+  listBooks()
+}
+
+function listBooks() {
     var content = document.querySelector(".content");
     var card = document.createElement("div");
     card.setAttribute("class", "card");
@@ -65,6 +77,23 @@ function listBooks(myLibrary, count) {
     description.setAttribute("class", "card-text");
     description.innerText = myLibrary[count].description;
 
+   
+    var read = document.createElement("p");
+    read.setAttribute("class", "card-text");
+    read.innerText = myLibrary[count].read;
+
+    let readButton = document.createElement('button');
+    readButton.setAttribute('class', 'btn btn-primary');
+    readButton.setAttribute('read-id', count);
+    readButton.addEventListener('click', readStatus,false);
+    if (myLibrary[count].read == true){
+      
+      readButton.innerText = 'Unread';
+    } else{
+      readButton.innerText = 'Read';
+    }
+    
+
     let deleteButton = document.createElement('button');
     deleteButton.setAttribute('class', 'btn btn-danger');
     deleteButton.setAttribute('delete-id', count);
@@ -76,6 +105,9 @@ function listBooks(myLibrary, count) {
     card.appendChild(card_body);
     card.appendChild(p);
     card.appendChild(description);
+    card.appendChild(read);
+    card.appendChild(readButton);
     content.appendChild(card);
+
     card.appendChild(deleteButton);
 }
