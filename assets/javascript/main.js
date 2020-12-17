@@ -71,6 +71,7 @@ function listBooks(myLibrary, count) {
     deleteButton.addEventListener('click', deleteBook,false);
     deleteButton.innerText = 'Delete';
 
+    card.setAttribute('data-id', count);
     card_body.appendChild(card_title);
     card.appendChild(card_body);
     card.appendChild(p);
