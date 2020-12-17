@@ -1,0 +1,13 @@
+.bottomright {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+.booksColumn {
+  margin: 0 20% 0 20%;
+}
+
+.card {
+  margin-bottom: 10px;
+}
