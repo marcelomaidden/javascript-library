@@ -24,7 +24,25 @@ class Book {
 
 class Library {
   constructor() {
-    this.myLibrary = [];
+    if (localStorage.hasOwnProperty('myLibrary'))
+      this.myLibrary = JSON.parse(localStorage["myLibrary"] || "[]") ;
+    else {
+      this.myLibrary = [];
+    }    
+
+    this.setStorage = this.setStorage.bind(this);
+    this.readStatus = this.readStatus.bind(this);
+    this.createCard = this.createCard.bind(this);
+    this.listBooks = this.listBooks.bind(this);
+    this.addBookToLibrary = this.addBookToLibrary.bind(this);
+    this.saveNewBook = this.saveNewBook.bind(this);
+    this.deleteBook = this.deleteBook.bind(this);
+
+    this.listBooks();
+  }
+
+  setStorage(){
+    localStorage.setItem('myLibrary', JSON.stringify(this.myLibrary));
   }
 
   readStatus(event) {
@@ -39,6 +57,7 @@ class Library {
       this.myLibrary[id].read = true;
       readButton.innerText = 'Unread';
     }
+    this.setStorage();
   }
 
   createCard(book) {
@@ -99,6 +118,8 @@ class Library {
     this.myLibrary.push(book);
     this.listBooks();
     last += 1;
+
+    this.setStorage();
   }
 
   deleteBook(event) {
@@ -116,6 +137,8 @@ class Library {
 
     this.myLibrary = newLibrary;
     this.listBooks();
+
+    this.setStorage();
   }
 
   saveNewBook(event) {
