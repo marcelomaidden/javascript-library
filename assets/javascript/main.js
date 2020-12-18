@@ -1,6 +1,6 @@
 
 /* eslint no-use-before-define: ["error", { "functions": false }] */
-
+/* eslint max-classes-per-file: ["error", 2] */
 let last = 0;
 function clearInputs() {
   const formInputs = document.querySelectorAll('input');
@@ -11,37 +11,37 @@ function clearInputs() {
   checkbox.checked = false;
 }
 
-const bookFactory = (bookTitle, bookAuthor, bookPages, bookDescription, bookRead) => {
-  const id = last;
-  const title = bookTitle;
-  const author = bookAuthor;
-  const pages = bookPages;
-  const description = bookDescription;
-  const read = bookRead;
+class Book {
+  constructor(bookTitle, bookAuthor, bookPages, bookDescription, bookRead) {
+    this.id = last;
+    this.title = bookTitle;
+    this.author = bookAuthor;
+    this.pages = bookPages;
+    this.description = bookDescription;
+    this.read = bookRead;
+  }
+}
 
-  return {
-    id, title, author, pages, description, read,
-  };
-};
+class Library {
+  constructor() {
+    this.myLibrary = [];
+  }
 
-const libraryFactory = () => {
-  let myLibrary = [];
-
-  function readStatus(event) {
+  readStatus(event) {
     const id = event.target.getAttribute('read-id');
     const button = `button[read-id="${id}"]`;
     const readButton = document.querySelector(button);
 
-    if (myLibrary[id].read === true) {
-      myLibrary[id].read = false;
+    if (this.myLibrary[id].read === true) {
+      this.myLibrary[id].read = false;
       readButton.innerText = 'Read';
     } else {
-      myLibrary[id].read = true;
+      this.myLibrary[id].read = true;
       readButton.innerText = 'Unread';
     }
   }
 
-  function createCard(book) {
+  createCard(book) {
     const content = document.querySelector('.content');
     const card = document.createElement('div');
     card.setAttribute('class', 'card');
@@ -60,7 +60,7 @@ const libraryFactory = () => {
     const readButton = document.createElement('button');
     readButton.setAttribute('class', 'btn btn-primary');
     readButton.setAttribute('read-id', book.id);
-    readButton.addEventListener('click', readStatus, false);
+    readButton.addEventListener('click', this.readStatus, false);
     if (book.read === true) {
       readButton.innerText = 'Unread';
     } else {
@@ -70,7 +70,7 @@ const libraryFactory = () => {
 
     const deleteButton = document.createElement('button');
     deleteButton.setAttribute('class', 'btn btn-danger deleteButton');
-    deleteButton.addEventListener('click', deleteBook, false);
+    deleteButton.addEventListener('click', this.deleteBook, false);
     deleteButton.setAttribute('delete-id', book.id);
     deleteButton.innerText = 'Delete';
 
@@ -85,42 +85,40 @@ const libraryFactory = () => {
     card.appendChild(deleteButton);
   }
 
-  function listBooks() {
+  listBooks() {
     const content = document.querySelector('.content');
 
     content.innerHTML = '';
 
-    for (let i = 0; i < myLibrary.length; i += 1) {
-      createCard(myLibrary[i]);
+    for (let i = 0; i < this.myLibrary.length; i += 1) {
+      this.createCard(this.myLibrary[i]);
     }
   }
 
-  function addBookToLibrary(book) {
-    myLibrary.push(book);
-    listBooks();
+  addBookToLibrary(book) {
+    this.myLibrary.push(book);
+    this.listBooks();
     last += 1;
   }
 
-  function deleteBook(event) {
+  deleteBook(event) {
     const id = event.target.getAttribute('delete-id');
-
-
-    myLibrary.splice(id, 1);
+    this.myLibrary.splice(id, 1);
     let newId = 0;
     const newLibrary = [];
 
-    myLibrary.map(book => {
+    this.myLibrary.map(book => {
       book.id = newId;
       newId += 1;
       newLibrary.push(book);
       return newLibrary;
     });
 
-    myLibrary = newLibrary;
-    listBooks();
+    this.myLibrary = newLibrary;
+    this.listBooks();
   }
 
-  function saveNewBook(event) {
+  saveNewBook(event) {
     event.preventDefault();
     const form = document.querySelector('form');
     if (!form.checkValidity() === false) {
@@ -130,8 +128,8 @@ const libraryFactory = () => {
       const description = document.getElementById('bookDescription').value;
       const read = document.getElementById('read').checked;
 
-      const book = bookFactory(title, author, pages, description, read);
-      addBookToLibrary(book);
+      const book = new Book(title, author, pages, description, read);
+      this.addBookToLibrary(book);
 
       const modalBackdrop = document.querySelector('.modal-backdrop.show ');
       modalBackdrop.style.display = 'none';
@@ -143,13 +141,9 @@ const libraryFactory = () => {
 
     form.classList.add('was-validated');
   }
+}
 
-  return {
-    listBooks, readStatus, deleteBook, addBookToLibrary, saveNewBook,
-  };
-};
-
-const library = libraryFactory();
+const library = new Library();
 
 const saveBook = document.querySelector('.saveBook');
 saveBook.addEventListener('click', library.saveNewBook);
