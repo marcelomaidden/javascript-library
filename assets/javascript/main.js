@@ -1,4 +1,6 @@
 
+/* eslint no-use-before-define: ["error", { "functions": false }] */
+
 let last = 0;
 function clearInputs() {
   const formInputs = document.querySelectorAll('input');
@@ -102,7 +104,7 @@ const libraryFactory = () => {
   function deleteBook(event) {
     const id = event.target.getAttribute('delete-id');
 
-    
+
     myLibrary.splice(id, 1);
     let newId = 0;
     const newLibrary = [];
