@@ -1,6 +1,6 @@
-
 /* eslint no-use-before-define: ["error", { "functions": false }] */
-/* eslint max-classes-per-file: ["error", 2] */
+import Book from './books';
+
 let last = 0;
 function clearInputs() {
   const formInputs = document.querySelectorAll('input');
@@ -11,24 +11,13 @@ function clearInputs() {
   checkbox.checked = false;
 }
 
-class Book {
-  constructor(bookTitle, bookAuthor, bookPages, bookDescription, bookRead) {
-    this.id = last;
-    this.title = bookTitle;
-    this.author = bookAuthor;
-    this.pages = bookPages;
-    this.description = bookDescription;
-    this.read = bookRead;
-  }
-}
-
 class Library {
   constructor() {
-    if (localStorage.hasOwnProperty('myLibrary'))
-      this.myLibrary = JSON.parse(localStorage["myLibrary"] || "[]") ;
-    else {
+    if (localStorage.myLibrary) {
+      this.myLibrary = JSON.parse(localStorage.myLibrary || '[]');
+    } else {
       this.myLibrary = [];
-    }    
+    }
 
     this.setStorage = this.setStorage.bind(this);
     this.readStatus = this.readStatus.bind(this);
@@ -41,7 +30,7 @@ class Library {
     this.listBooks();
   }
 
-  setStorage(){
+  setStorage() {
     localStorage.setItem('myLibrary', JSON.stringify(this.myLibrary));
   }
 
@@ -151,7 +140,7 @@ class Library {
       const description = document.getElementById('bookDescription').value;
       const read = document.getElementById('read').checked;
 
-      const book = new Book(title, author, pages, description, read);
+      const book = new Book(title, author, pages, description, read, last);
       this.addBookToLibrary(book);
 
       const modalBackdrop = document.querySelector('.modal-backdrop.show ');
