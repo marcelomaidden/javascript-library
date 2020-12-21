@@ -1,4 +1,6 @@
 /* eslint no-use-before-define: ["error", { "functions": false }] */
+/* eslint-disable import/extensions */
+
 import Book from './books.js';
 
 let last = 0;
